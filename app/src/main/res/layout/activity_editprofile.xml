@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/bekroncadangan"
+    tools:context=".Template.EditprofileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            style="@style/linearParent"
+            android:layout_gravity="center"
+            android:padding="@dimen/loginViewsMargin">
+
+            <TextView
+                style="@style/headerTextPrimary"
+                android:text="Edit Profile"
+                android:layout_marginTop="@dimen/loginViewsMargin"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="121dp"
+                android:layout_height="121dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/profilephoto"
+                android:id="@+id/userPhoto"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="20dp">
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <TextView
+                android:id="@+id/textPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Photo"
+                android:layout_gravity="center_horizontal"
+                android:textSize="14sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/parent"
+                android:layout_marginTop="@dimen/signup_text_margin_top"
+                android:id="@+id/txtNameEditLayout">
+                <EditText
+                    android:id="@+id/txtNameEdit"
+                    style="@style/modifiedEditText"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:hint="Name"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtMobileEditLayout"
+                style="@style/parent"
+                android:layout_marginTop="@dimen/loginViewsMargin">
+                <EditText
+                    style="@style/modifiedEditText"
+                    android:id="@+id/txtMobileEdit"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:hint="Mobile Phone"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtEmailEditLayout"
+                style="@style/parent"
+                android:layout_marginTop="@dimen/loginViewsMargin">
+                <EditText
+                    style="@style/modifiedEditText"
+                    android:id="@+id/txtEmailEdit"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:hint="@string/login_email_hint"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtGenderEditLayout"
+                style="@style/parent"
+                android:layout_marginTop="@dimen/loginViewsMargin">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <AutoCompleteTextView
+                        style="@style/modifiedEditText"
+                        android:id="@+id/txtGenderEdit"
+                        android:hint="Gender                    "
+                        android:inputType="text"/>
+
+                    <Button
+                        android:id="@+id/btnGenderEdit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Choose Gender"
+                        android:maxLines="1"
+                        android:inputType="date"/>
+                </LinearLayout>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtAddressEditLayout"
+                style="@style/parent"
+                android:layout_marginTop="@dimen/loginViewsMargin">
+                <EditText
+                    style="@style/modifiedEditText"
+                    android:id="@+id/txtAddressEdit"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:hint="Address"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtBirthdateEditLayout"
+                style="@style/parent"
+                android:layout_marginTop="@dimen/loginViewsMargin">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <EditText
+                        style="@style/modifiedEditText"
+                        android:id="@+id/txtBirthdateEdit"
+                        android:inputType="date"
+                        android:maxLines="1"
+                        android:hint="Birthday"/>
+
+                    <Button
+                        android:id="@+id/btnBirthdateEdit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Birthday"
+                        android:maxLines="1"
+                        android:inputType="date"/>
+                </LinearLayout>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="10dp">
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="200dp"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp">
+
+                    <Button
+                        style="@style/loginButton"
+                        android:id="@+id/btnEditProfile"
+                        android:text="Edit"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/loginViewsMargin"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="200dp"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp">
+
+                    <Button
+                        android:id="@+id/EditProfileCancel"
+                        style="@style/loginButton"
+                        android:text="Cancel"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/loginViewsMargin"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+
+
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>
