@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.praktikum.Template.RiwayatPendingActivity;
+import com.example.praktikum.AuthAndUser.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class RiwayatActivity extends AppCompatActivity {
@@ -56,10 +56,14 @@ public class RiwayatActivity extends AppCompatActivity {
         });
     }
 
-    public void riwayatregist(View view) {
+    public void riwayatpending(View view) {
         Intent intent = new Intent(this, RiwayatPendingActivity.class);
         startActivity(intent);
-        Toast.makeText(this, "MAU NIH GAN", Toast.LENGTH_LONG).show();
+    }
+
+    public void riwayatresponed(View view) {
+        Intent intent = new Intent(this, RiwayatDiresponActivity.class);
+        startActivity(intent);
     }
 
     private void isLogin(){
@@ -82,7 +86,7 @@ public class RiwayatActivity extends AppCompatActivity {
 
             startActivity(new Intent(RiwayatActivity.this,RiwayatActivity.class));
         }else{
-            startActivity(new Intent(RiwayatActivity.this,LoginActivity.class));
+            startActivity(new Intent(RiwayatActivity.this, LoginActivity.class));
             finish();
         }
     }

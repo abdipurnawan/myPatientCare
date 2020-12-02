@@ -27,4 +27,20 @@ public interface UserDao {
     //login
     @Query("Select *from users where email = :email and password = :password")
     User loginUser(String email, String password);
+
+    //cek email unique
+    @Query("Select *from users where email = :email limit 1")
+    User cekEmail(String email);
+
+    //editUser
+    @Query("UPDATE users set name = :nameUser, email = :emailUser, mobile = :mobileUser, gender = :genderUser, address = :addressUser, birthdate = :birthdateUser WHERE ID = :sID")
+    void updateUser(int sID, String nameUser, String emailUser, String mobileUser, String genderUser, String addressUser, String birthdateUser);
+
+    //get spesifik user
+    @Query("SELECT *from users where ID = :sID")
+    User getUser(int sID);
+
+    //password change
+    @Query("UPDATE users set password = :newPass where ID = :sID")
+    void setNewPassword(int sID, String newPass);
 }

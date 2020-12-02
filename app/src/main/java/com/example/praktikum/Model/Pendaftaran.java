@@ -1,31 +1,55 @@
 package com.example.praktikum.Model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "pendaftarans")
 public class Pendaftaran {
-    private String id;
-    private String id_user;
+    @PrimaryKey(autoGenerate = true)
+    private int ID;
+
+    @ColumnInfo(name = "id_user")
+    private int id_user;
+
+    @ColumnInfo(name = "poli")
     private String poli;
+
+    @ColumnInfo(name = "keluhan")
     private String keluhan;
+
+    @ColumnInfo(name = "tgl_regis")
     private String tgl_regis;
+
+    @ColumnInfo(name = "penyakit_bawaan")
     private String penyakit_bawaan;
+
+    @ColumnInfo(name = "tinggi_badan")
     private String tinggi_badan;
+
+    @ColumnInfo(name = "status")
     private String status;
+
+    @ColumnInfo(name = "berat_badan")
     private String berat_badan;
 
     //id
-    public String getId(){
-        return id;
+
+
+    public int getID() {
+        return ID;
     }
 
-    public void setId(String id){
-        this.id = id;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     //id_user
-    public String getId_user(){
+    public int getId_user(){
         return id_user;
     }
 
-    public void setId_user(String id_user){
+    public void setId_user(int id_user){
         this.id_user= id_user;
     }
 

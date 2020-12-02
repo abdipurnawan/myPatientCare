@@ -1,22 +1,15 @@
-package com.example.praktikum.Template;
+package com.example.praktikum.AuthAndUser;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -25,27 +18,15 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.praktikum.LoginActivity;
+import com.example.praktikum.Database.RoomDB;
+import com.example.praktikum.Model.User;
 import com.example.praktikum.ProfileActivity;
 import com.example.praktikum.R;
 import com.google.android.material.textfield.TextInputLayout;
-import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class EditprofileActivity extends AppCompatActivity {
 
@@ -53,11 +34,9 @@ public class EditprofileActivity extends AppCompatActivity {
     private TextView name, mobile, email, address, birthdate, photo;
     TextInputLayout layoutName, layoutEmail, layoutMobile, layoutAddress, layoutBirthdate, layoutGender;
     private AutoCompleteTextView gender;
-    String idLogin, tokenLogin;
     ProgressDialog dialog;
-    CircleImageView circleImageView;
-    private static final int GALLERY_ADD_PROFILE = 1;
-    private Bitmap bitmap = null;
+    RoomDB database;
+    User user;
 
     private static final String[] jk = new String[] {"Male", "Female"};
     private DatePickerDialog datePickerDialog;
@@ -67,9 +46,6 @@ public class EditprofileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editprofile);
-        SharedPreferences userPref = getApplicationContext().getSharedPreferences("user", getApplicationContext().MODE_PRIVATE);
-        idLogin = userPref.getString("id",null);
-        tokenLogin = userPref.getString("token", null);
         isLogin();
         init();
     }
@@ -86,8 +62,6 @@ public class EditprofileActivity extends AppCompatActivity {
         btnGender = (Button)findViewById(R.id.btnGenderEdit);
         button = (Button) findViewById(R.id.EditProfileCancel);
         btnEdit = (Button)findViewById(R.id.btnEditProfile);
-        photo = (TextView)findViewById(R.id.textPhoto);
-        circleImageView = (CircleImageView)findViewById(R.id.userPhoto);
 
         layoutName = (TextInputLayout)findViewById(R.id.txtNameEditLayout);
         layoutAddress = (TextInputLayout)findViewById(R.id.txtAddressEditLayout);
@@ -106,15 +80,6 @@ public class EditprofileActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, jk);
         gender.setAdapter(adapter);
-
-        photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                startActivityForResult(intent, GALLERY_ADD_PROFILE);
-            }
-        });
 
         btnGender.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +103,6 @@ public class EditprofileActivity extends AppCompatActivity {
             }
         });
 
-        getUserInfo();
         setUserInfo();
 
         dialog = new ProgressDialog(EditprofileActivity.this);
@@ -149,13 +113,8 @@ public class EditprofileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(validate()){
                     edit();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            openActivity();
-                        }
-                    }, 1000);
+                    openActivity();
+                    finish();
                 }
             }
         });
@@ -274,50 +233,6 @@ public class EditprofileActivity extends AppCompatActivity {
         });
     }
 
-    private void getUserInfo() {
-        StringRequest request = new StringRequest(Request.Method.POST, Constant.GET_USER,response -> {
-            try {
-                JSONObject object1 = new JSONObject(response);
-                if (object1.getBoolean("success")){
-                    JSONObject user = object1.getJSONObject("user");
-                    SharedPreferences userPref = getApplicationContext().getSharedPreferences("user", getApplicationContext().MODE_PRIVATE);
-                    SharedPreferences.Editor editor = userPref.edit();
-                    editor.putString("name", user.getString("name"));
-                    editor.putString("email", user.getString("email"));
-                    editor.putString("role", user.getString("role"));
-                    editor.putString("mobile", user.getString("mobile"));
-                    editor.putString("address", user.getString("address"));
-                    editor.putString("gender", user.getString("gender"));
-                    editor.putString("birthdate", user.getString("birthdate"));
-                    editor.putString("photo", user.getString("photo"));
-                    editor.apply();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Get Data Failed", Toast.LENGTH_SHORT).show();
-            }
-        },error -> {
-            error.printStackTrace();
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                // Basic Authentication
-                //String auth = "Basic " + Base64.encodeToString(CONSUMER_KEY_AND_SECRET.getBytes(), Base64.NO_WRAP);
-
-                headers.put("Authorization", "Bearer " + tokenLogin);
-                return headers;
-            }
-
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("id", idLogin);
-                return map;
-            }
-        };
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(request);
-    }
 
     private void setUserInfo(){
         SharedPreferences userPref = getApplicationContext().getSharedPreferences("user", getApplicationContext().MODE_PRIVATE);
@@ -327,8 +242,6 @@ public class EditprofileActivity extends AppCompatActivity {
         String addressLogin = userPref.getString("address",null);
         String genderLogin = userPref.getString("gender",null);
         String birthdateLogin = userPref.getString("birthdate",null);
-
-        Picasso.get().load(Constant.URL+"/profiles/"+userPref.getString("photo", null)).into(circleImageView);
 
         name.setText(nameLogin);
         mobile.setText(mobileLogin);
@@ -366,87 +279,21 @@ public class EditprofileActivity extends AppCompatActivity {
 
     private void edit(){
         dialog.setMessage("Updating Data");
-        dialog.show();
-        StringRequest request = new StringRequest(Request.Method.POST, Constant.SET_USER,response -> {
-            try {
-                JSONObject object1 = new JSONObject(response);
-                if (object1.getBoolean("success")){
-                    JSONObject user = object1.getJSONObject("user");
-                    SharedPreferences userPref = getApplicationContext().getSharedPreferences("user", getApplicationContext().MODE_PRIVATE);
-                    SharedPreferences.Editor editor = userPref.edit();
-                    editor.putString("name", user.getString("name"));
-                    editor.putString("email", user.getString("email"));
-                    editor.putString("role", user.getString("role"));
-                    editor.putString("mobile", user.getString("mobile"));
-                    editor.putString("address", user.getString("address"));
-                    editor.putString("gender", user.getString("gender"));
-                    editor.putString("birthdate", user.getString("birthdate"));
-                    editor.putString("photo", user.getString("photo"));
-                    editor.apply();
-                    Toast.makeText(getApplicationContext(), "Edit Success", Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Edit Data Failed", Toast.LENGTH_SHORT).show();
-            }
-            dialog.dismiss();
-        },error -> {
-            error.printStackTrace();
-            dialog.dismiss();
-        }){
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                // Basic Authentication
-                //String auth = "Basic " + Base64.encodeToString(CONSUMER_KEY_AND_SECRET.getBytes(), Base64.NO_WRAP);
-
-                headers.put("Authorization", "Bearer " + tokenLogin);
-                return headers;
-            }
-
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("id", idLogin);
-                map.put("name", name.getText().toString());
-                map.put("email", email.getText().toString());
-                map.put("gender", gender.getText().toString());
-                map.put("mobile", mobile.getText().toString());
-                map.put("address", address.getText().toString());
-                map.put("birthdate", birthdate.getText().toString());
-                map.put("photo", bitmapToString(bitmap));
-                return map;
-            }
-        };
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(request);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==GALLERY_ADD_PROFILE && resultCode==RESULT_OK){
-            Uri imgUri = data.getData();
-            circleImageView.setImageURI(imgUri);
-
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imgUri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private String bitmapToString(Bitmap bitmap) {
-        if(bitmap!=null){
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-            byte [] array = byteArrayOutputStream.toByteArray();
-            return Base64.encodeToString(array, Base64.DEFAULT);
-        }
-
-        return "";
-
+        SharedPreferences userPref = getApplicationContext().getSharedPreferences("user", getApplicationContext().MODE_PRIVATE);
+        database = RoomDB.getInstance(getApplicationContext());
+        database.userDao().updateUser(userPref.getInt("id", 0), name.getText().toString(), email.getText().toString(), mobile.getText().toString(), gender.getText().toString(), address.getText().toString(), birthdate.getText().toString());
+        user = database.userDao().getUser(userPref.getInt("id", 0));
+        SharedPreferences.Editor editor = userPref.edit();
+        editor.putBoolean("isLoggedIn", true);
+        editor.putString("name", user.getName());
+        editor.putString("email", user.getEmail());
+        editor.putString("mobile", user.getMobile());
+        editor.putString("address", user.getAddress());
+        editor.putString("gender", user.getGender());
+        editor.putString("birthdate", user.getBirthdate());
+        editor.apply();
+        Toast.makeText(getApplicationContext(), "Edit Success", Toast.LENGTH_SHORT).show();
+        dialog.dismiss();
     }
 
     private void showDateDialog() {

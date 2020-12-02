@@ -10,15 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Template.EditRegistrasiaActivity"></activity>
-        <activity android:name=".Template.DetailRiwayatrgsActivity" />
-        <activity android:name=".Template.RiwayatPendingActivity" />
-        <activity android:name=".Template.RegistsakitActivity" />
-        <activity android:name=".Template.EditpassActivity" />
-        <activity android:name=".Template.EditprofileActivity" />
+        <activity android:name=".RiwayatDiresponActivity"></activity>
+        <activity android:name=".EditRegistrasiaActivity" />
+        <activity android:name=".DetailRiwayatrgsActivity" />
+        <activity android:name=".RiwayatPendingActivity" />
+        <activity android:name=".RegistsakitActivity" />
+        <activity android:name=".AuthAndUser.EditpassActivity" />
+        <activity android:name=".AuthAndUser.EditprofileActivity" />
         <activity android:name=".Template.AuthActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".AuthAndUser.RegisterActivity" />
+        <activity android:name=".AuthAndUser.LoginActivity" />
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"

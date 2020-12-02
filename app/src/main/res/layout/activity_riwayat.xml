@@ -35,7 +35,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/riwayatregis"
                     android:clickable="true"
-                    android:onClick="riwayatregist"
+                    android:onClick="riwayatpending"
                     android:layout_width="0dp"
                     android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
-                            android:text="Riwayat \nRegistrasi"/>
+                            android:text="Registrasi Pending"/>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -81,6 +81,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
+                    android:onClick="riwayatresponed"
                     app:cardPreventCornerOverlap="true"
                     app:cardUseCompatPadding="true"
                     android:layout_marginRight="20dp"
@@ -102,7 +103,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
-                            android:text="Riwayat \nPenyakit"/>
+                            android:text="Registrasi Direspon"/>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

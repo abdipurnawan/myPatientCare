@@ -1,4 +1,4 @@
-package com.example.praktikum.Template;
+package com.example.praktikum;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,8 +20,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.praktikum.MainActivity;
-import com.example.praktikum.R;
+import com.example.praktikum.AuthAndUser.LoginActivity;
+import com.example.praktikum.AuthAndUser.RegisterActivity;
+import com.example.praktikum.Database.RoomDB;
+import com.example.praktikum.Model.Pendaftaran;
+import com.example.praktikum.Model.User;
+import com.example.praktikum.Template.Constant;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
@@ -36,8 +40,8 @@ public class RegistsakitActivity extends AppCompatActivity {
     private AutoCompleteTextView poli;
     EditText keluhan, penyakit, tinggi, berat;
     TextInputLayout layoutKeluhan, layoutPenyakit, layoutPoli, layoutTinggi, layoutBerat;
-    private String tokenLogin;
     ProgressDialog dialog;
+    RoomDB database;
     private static final String[] poliList = new String[] {"Umum", "Anak", "Gigi", "Urologi", "THT"};
 
     @Override
@@ -54,9 +58,6 @@ public class RegistsakitActivity extends AppCompatActivity {
     }
 
     public void init(){
-        SharedPreferences userPref = getApplicationContext().getSharedPreferences("user", getApplicationContext().MODE_PRIVATE);
-        tokenLogin = userPref.getString("token", null);
-
         layoutKeluhan = (TextInputLayout)findViewById(R.id.txtRegKeluhanLayout);
         layoutPenyakit = (TextInputLayout)findViewById(R.id.txtRegPenyakitLayout);
         layoutPoli = (TextInputLayout)findViewById(R.id.txtRegPoliLayout);
@@ -230,44 +231,25 @@ public class RegistsakitActivity extends AppCompatActivity {
     private void registrasi(){
         dialog.setMessage("Registering");
         dialog.show();
-        StringRequest request = new StringRequest(Request.Method.POST, Constant.REGISTER_SAKIT, response -> {
-            try {
-                JSONObject object1 = new JSONObject(response);
-                if (object1.getBoolean("success")){
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
-                    Toast.makeText(getApplicationContext(), "Register Success", Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Register Failed", Toast.LENGTH_SHORT).show();
-            }
-            dialog.dismiss();
-        },error -> {
-            error.printStackTrace();
-            dialog.dismiss();
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                // Basic Authentication
-                //String auth = "Basic " + Base64.encodeToString(CONSUMER_KEY_AND_SECRET.getBytes(), Base64.NO_WRAP);
+        SharedPreferences userPref = getApplicationContext().getSharedPreferences("user", getApplicationContext().MODE_PRIVATE);
+        int user_id = userPref.getInt("id", 0);
+        database = RoomDB.getInstance(getApplicationContext());
 
-                headers.put("Authorization", "Bearer " + tokenLogin);
-                return headers;
-            }
+        Pendaftaran pendaftaran = new Pendaftaran();
+        pendaftaran.setTinggi_badan(tinggi.getText().toString());
+        pendaftaran.setTgl_regis(null);
+        pendaftaran.setStatus("pending");
+        pendaftaran.setPenyakit_bawaan(penyakit.getText().toString());
+        pendaftaran.setKeluhan(keluhan.getText().toString());
+        pendaftaran.setBerat_badan(berat.getText().toString());
+        pendaftaran.setId_user(user_id);
+        pendaftaran.setPoli(poli.getText().toString());
+        database.pendaftaranDao().insertPendaftaran(pendaftaran);
+        dialog.dismiss();
+        Intent intent1 = new Intent(RegistsakitActivity.this, MainActivity.class);
+        startActivity(intent1);
+        finish();
+        Toast.makeText(getApplicationContext(), "Register Success", Toast.LENGTH_SHORT).show();
 
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("poli",poli.getText().toString());
-                map.put("keluhan",keluhan.getText().toString());
-                map.put("penyakit_bawaan",penyakit.getText().toString());
-                map.put("tinggi_badan",tinggi.getText().toString());
-                map.put("berat_badan",berat.getText().toString());
-                return map;
-            }
-        };
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(request);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.praktikum.Template;
+package com.example.praktikum;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,9 +20,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.praktikum.R;
+import com.example.praktikum.AuthAndUser.LoginActivity;
+import com.example.praktikum.AuthAndUser.RegisterActivity;
+import com.example.praktikum.Database.RoomDB;
+import com.example.praktikum.Model.Pendaftaran;
+import com.example.praktikum.Template.Constant;
 import com.google.android.material.textfield.TextInputLayout;
-import com.example.praktikum.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,15 +40,14 @@ public class EditRegistrasiaActivity extends AppCompatActivity {
     EditText keluhan, penyakit, tinggi, berat;
     TextInputLayout layoutKeluhan, layoutPenyakit, layoutPoli, layoutTinggi, layoutBerat;
     ProgressDialog dialog;
-    String idRegis, tokenLogin;
+    int idRegis;
     private static final String[] poliList = new String[] {"Umum", "Anak", "Gigi", "Urologi", "THT"};
+    RoomDB database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_registrasi);
-        SharedPreferences userPref = getApplicationContext().getSharedPreferences("user", getApplicationContext().MODE_PRIVATE);
-        tokenLogin = userPref.getString("token", null);
         init();
     }
 
@@ -228,54 +230,18 @@ public class EditRegistrasiaActivity extends AppCompatActivity {
             poli.setText(getIntent().getStringExtra("poli"));
             tinggi.setText(getIntent().getStringExtra("tinggi"));
             berat.setText(getIntent().getStringExtra("berat"));
-            idRegis = idRegis = getIntent().getStringExtra("id");;
+            idRegis = getIntent().getIntExtra("id", 0);
         }
     }
 
     private void edit(){
-        dialog.setMessage("Updating Data");
-        dialog.show();
-        StringRequest request = new StringRequest(Request.Method.POST, Constant.SET_REGIS_SAKIT, response -> {
-            try {
-                JSONObject object1 = new JSONObject(response);
-                if (object1.getBoolean("success")){
-                    Intent intent = new Intent(this, DetailRiwayatrgsActivity.class);
-                    intent.putExtra("id", idRegis);
-                    startActivity(intent);
-                    finish();
-                    Toast.makeText(getApplicationContext(), "Update Registrasi Success", Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Update Registrasi Failed", Toast.LENGTH_SHORT).show();
-            }
-            dialog.dismiss();
-        },error -> {
-            error.printStackTrace();
-            dialog.dismiss();
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                // Basic Authentication
-                //String auth = "Basic " + Base64.encodeToString(CONSUMER_KEY_AND_SECRET.getBytes(), Base64.NO_WRAP);
-
-                headers.put("Authorization", "Bearer " + tokenLogin);
-                return headers;
-            }
-
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("id_regis",idRegis);
-                map.put("poli",poli.getText().toString());
-                map.put("keluhan",keluhan.getText().toString());
-                map.put("penyakit_bawaan",penyakit.getText().toString());
-                map.put("tinggi_badan",tinggi.getText().toString());
-                map.put("berat_badan",berat.getText().toString());
-                return map;
-            }
-        };
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(request);
+        database = RoomDB.getInstance(getApplicationContext());
+        database.pendaftaranDao().updatePendaftaran(idRegis, keluhan.getText().toString(), penyakit.getText().toString(), poli.getText().toString(), tinggi.getText().toString(), berat.getText().toString());
+        RiwayatPendingActivity.recyclerView.getAdapter().notifyDataSetChanged();
+        Intent intent1 = new Intent(EditRegistrasiaActivity.this, DetailRiwayatrgsActivity.class);
+        intent1.putExtra("id", idRegis);
+        startActivity(intent1);
+        finish();
+        Toast.makeText(getApplicationContext(), "Edit Registrasi Success", Toast.LENGTH_SHORT).show();
     }
 }

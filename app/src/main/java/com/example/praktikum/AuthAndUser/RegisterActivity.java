@@ -1,50 +1,30 @@
-package com.example.praktikum;
+package com.example.praktikum.AuthAndUser;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.praktikum.Database.RoomDB;
 import com.example.praktikum.Model.User;
-import com.example.praktikum.Template.Constant;
+import com.example.praktikum.R;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -56,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button btnregis, btnBirthdate, btnGender;
     ProgressDialog dialog;
     RoomDB database;
+    User user;
 
     private static final String[] jk = new String[] {"Male", "Female"};
 
@@ -372,20 +353,28 @@ public class RegisterActivity extends AppCompatActivity {
     private void register(){
         dialog.setMessage("Registering");
         dialog.show();
-        User user = new User();
-        user.setName(name.getText().toString());
-        user.setEmail(email.getText().toString());
-        user.setPassword(password.getText().toString());
-        user.setAddress(address.getText().toString());
-        user.setBirthdate(birthdate.getText().toString());
-        user.setGender(gender.getText().toString());
-        user.setMobile(mobile.getText().toString());
-        user.setRole("2");
-        database.userDao().insert(user);
-        dialog.dismiss();
-        Intent intent1 = new Intent(RegisterActivity.this, LoginActivity.class);
-        startActivity(intent1);
-        Toast.makeText(getApplicationContext(), "Register Success", Toast.LENGTH_SHORT).show();
+        database = RoomDB.getInstance(getApplicationContext());
+        user = database.userDao().cekEmail(email.getText().toString());
+        if (user == null){
+            User user = new User();
+            user.setName(name.getText().toString());
+            user.setEmail(email.getText().toString());
+            user.setPassword(password.getText().toString());
+            user.setAddress(address.getText().toString());
+            user.setBirthdate(birthdate.getText().toString());
+            user.setGender(gender.getText().toString());
+            user.setMobile(mobile.getText().toString());
+            user.setRole("2");
+            database.userDao().insert(user);
+            dialog.dismiss();
+            Intent intent1 = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent1);
+            Toast.makeText(getApplicationContext(), "Register Success", Toast.LENGTH_SHORT).show();
+        }else{
+            dialog.dismiss();
+            Toast.makeText(getApplicationContext(), "Oops, Email Has been Used", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 

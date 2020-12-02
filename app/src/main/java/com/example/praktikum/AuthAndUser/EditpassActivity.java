@@ -1,4 +1,4 @@
-package com.example.praktikum.Template;
+package com.example.praktikum.AuthAndUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,42 +13,32 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.praktikum.Database.RoomDB;
+import com.example.praktikum.Model.User;
 import com.example.praktikum.ProfileActivity;
 import com.example.praktikum.R;
 import com.google.android.material.textfield.TextInputLayout;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class EditpassActivity extends AppCompatActivity {
 
     private Button button, btnEditPass;
     private TextInputLayout currentLayout, newLayout, confirmLayout;
     private EditText currentPass, newPass, confirmPass;
-    String idLogin, tokenLogin;
     ProgressDialog dialog;
+    RoomDB database;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editpass);
-        SharedPreferences userPref = getApplicationContext().getSharedPreferences("user", getApplicationContext().MODE_PRIVATE);
-        idLogin = userPref.getString("id",null);
-        tokenLogin = userPref.getString("token", null);
         init();
     }
 
     public void openActivity() {
         Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void init(){
@@ -143,45 +133,18 @@ public class EditpassActivity extends AppCompatActivity {
     private void editPass(){
         dialog.setMessage("Updating Password");
         dialog.show();
-        StringRequest request = new StringRequest(Request.Method.POST, Constant.UPDATE_PASSWORD, response -> {
-            try {
-                JSONObject object1 = new JSONObject(response);
-                if (object1.getBoolean("success")) {
-                    Toast.makeText(getApplicationContext(), "Password Has Been Changed", Toast.LENGTH_SHORT).show();
-                    openActivity();
-                }else if(!object1.getBoolean("success")){
-                    Toast.makeText(getApplicationContext(), "Current Password is Invalid", Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Edit Data Failed", Toast.LENGTH_SHORT).show();
-            }
+        SharedPreferences userPref = getApplicationContext().getSharedPreferences("user", getApplicationContext().MODE_PRIVATE);
+        database = RoomDB.getInstance(getApplicationContext());
+        user = database.userDao().getUser(userPref.getInt("id", 0));
+        if (currentPass.getText().toString().equals(user.getPassword())){
+            database.userDao().setNewPassword(userPref.getInt("id", 0), newPass.getText().toString());
             dialog.dismiss();
-        },error -> {
-            error.printStackTrace();
+            openActivity();
+            Toast.makeText(getApplicationContext(), "Edit Password Success", Toast.LENGTH_SHORT).show();
+        }else{
             dialog.dismiss();
-        }){
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                // Basic Authentication
-                //String auth = "Basic " + Base64.encodeToString(CONSUMER_KEY_AND_SECRET.getBytes(), Base64.NO_WRAP);
-
-                headers.put("Authorization", "Bearer " + tokenLogin);
-                return headers;
-            }
-
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("id", idLogin);
-                map.put("password", currentPass.getText().toString());
-                map.put("newPass", newPass.getText().toString());
-                return map;
-            }
-        };
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(request);
+            Toast.makeText(getApplicationContext(), "Current Passowrd is Incorrect", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private boolean validate(){

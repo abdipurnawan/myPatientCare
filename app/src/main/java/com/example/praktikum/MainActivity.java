@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.praktikum.Template.RegistsakitActivity;
+import com.example.praktikum.AuthAndUser.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
             startActivity(new Intent(MainActivity.this,MainActivity.class));
         }else{
-            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
         }
     }

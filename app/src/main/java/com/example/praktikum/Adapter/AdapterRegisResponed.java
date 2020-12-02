@@ -9,25 +9,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.praktikum.Model.PendaftaranWithUsers;
 import com.example.praktikum.DetailRiwayatrgsActivity;
+import com.example.praktikum.Model.PendaftaranWithUsers;
 import com.example.praktikum.R;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
+
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-public class AdapterRegisPending extends RecyclerView.Adapter<AdapterRegisPending.ViewHolder> {
+public class AdapterRegisResponed  extends RecyclerView.Adapter<AdapterRegisResponed.ViewHolder> {
 
-    List<PendaftaranWithUsers>pendaftaranList;
+    List<PendaftaranWithUsers> pendaftaranList;
 
     Context context;
 
-    public AdapterRegisPending(List<PendaftaranWithUsers> pendaftaranList, Context context) {
+    public AdapterRegisResponed(List<PendaftaranWithUsers> pendaftaranList, Context context) {
         this.pendaftaranList = pendaftaranList;
         this.context = context;
     }
@@ -35,16 +35,16 @@ public class AdapterRegisPending extends RecyclerView.Adapter<AdapterRegisPendin
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterRegisResponed.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.item_riwayatrgs_menu, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
+        AdapterRegisResponed.ViewHolder viewHolder = new AdapterRegisResponed.ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterRegisResponed.ViewHolder holder, int position) {
         holder.textView.setText("No. Pendaftaran: "+(position+1));
         holder.textView1.setText("Keluhan: "+pendaftaranList.get(position).pendaftaran.getKeluhan());
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
@@ -85,3 +85,4 @@ public class AdapterRegisPending extends RecyclerView.Adapter<AdapterRegisPendin
         }
     }
 }
+

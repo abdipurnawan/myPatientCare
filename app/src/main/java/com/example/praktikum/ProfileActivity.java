@@ -3,7 +3,6 @@ package com.example.praktikum;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,26 +11,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.praktikum.Template.Constant;
-import com.example.praktikum.Template.EditpassActivity;
-import com.example.praktikum.Template.EditprofileActivity;
+import com.example.praktikum.AuthAndUser.EditpassActivity;
+import com.example.praktikum.AuthAndUser.EditprofileActivity;
+import com.example.praktikum.AuthAndUser.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -45,9 +31,6 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        SharedPreferences userPref = getApplicationContext().getSharedPreferences("user", getApplicationContext().MODE_PRIVATE);
-        idLogin = userPref.getString("id",null);
-        tokenLogin = userPref.getString("token", null);
         isLogin();
         init();
     }
@@ -89,7 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                //openActivity();
+                openActivity();
             }
         });
 
@@ -97,7 +80,7 @@ public class ProfileActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //openActivity1();
+                openActivity1();
             }
         });
 

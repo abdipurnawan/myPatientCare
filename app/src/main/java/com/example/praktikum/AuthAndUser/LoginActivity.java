@@ -1,4 +1,4 @@
-package com.example.praktikum;
+package com.example.praktikum.AuthAndUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,21 +14,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.praktikum.Database.RoomDB;
+import com.example.praktikum.MainActivity;
 import com.example.praktikum.Model.User;
-import com.example.praktikum.Template.Constant;
+import com.example.praktikum.R;
 import com.google.android.material.textfield.TextInputLayout;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -146,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
             if (id_user>0){
                 SharedPreferences.Editor editor = userPref.edit();
                 editor.putBoolean("isLoggedIn", true);
+                editor.putInt("id", user.getID());
                 editor.putString("name", user.getName());
                 editor.putString("email", user.getEmail());
                 editor.putString("role", user.getRole());

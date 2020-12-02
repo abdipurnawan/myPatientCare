@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@drawable/bekroncadangan2"
-    tools:context=".Template.EditRegistrasiaActivity">
+    tools:context=".EditRegistrasiaActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
