@@ -35,4 +35,14 @@ public interface PendaftaranDao {
 
     @Query("DELETE FROM pendaftarans where ID = :id")
     void deletePendaftaran(int id);
+
+    //ADMIN
+    @Query("SELECT * FROM pendaftarans WHERE status = :status")
+    List<PendaftaranWithUsers> loadPendaftaranMasuk(String status);
+
+    @Query("UPDATE pendaftarans set tgl_regis = :tglRegis, status = :stat where ID = :sID")
+    void acceptRegistrasi(String tglRegis, String stat, int sID);
+
+    @Query("UPDATE pendaftarans set  status = :stat where ID = :sID")
+    void refuseRegistrasi(String stat, int sID);
 }

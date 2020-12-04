@@ -1,4 +1,4 @@
-package com.example.praktikum;
+package com.example.praktikum.Admin;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -39,7 +39,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileActivity extends AppCompatActivity {
+public class AdminProfileActivity extends AppCompatActivity {
 
     private Button button, btnLogout;
     private TextView mainName, mainEmail, name, mobile, email, address, birthdate, gender, photo;
@@ -63,11 +63,11 @@ public class ProfileActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.nav_home:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        startActivity(new Intent(getApplicationContext(), AdminHomeActivity.class));
                         overridePendingTransition(0,0);
                         break;
                     case R.id.nav_recent:
-                        startActivity(new Intent(getApplicationContext(), RiwayatActivity.class));
+                        startActivity(new Intent(getApplicationContext(), AdminRiwayatActivity.class));
                         overridePendingTransition(0,0);
                         break;
                     case R.id.nav_user:
@@ -108,7 +108,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AdminProfileActivity.this);
                 builder.setTitle("Confirm");
                 builder.setMessage("Are You Sure to Logout?");
                 builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
@@ -119,7 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
                         editor.clear();
                         editor.apply();
                         Toast.makeText(getApplicationContext(), "Logout Success", Toast.LENGTH_SHORT).show();
-                        Intent intent1 = new Intent(ProfileActivity.this, LoginActivity.class);
+                        Intent intent1 = new Intent(AdminProfileActivity.this, LoginActivity.class);
                         startActivity(intent1);
                     }
                 });
@@ -181,9 +181,9 @@ public class ProfileActivity extends AppCompatActivity {
             editor.putBoolean("isFirstTime", false);
             editor.apply();
 
-            startActivity(new Intent(ProfileActivity.this,ProfileActivity.class));
+            startActivity(new Intent(AdminProfileActivity.this,ProfileActivity.class));
         }else{
-            startActivity(new Intent(ProfileActivity.this,LoginActivity.class));
+            startActivity(new Intent(AdminProfileActivity.this,LoginActivity.class));
             finish();
         }
     }

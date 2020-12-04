@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Admin.AdminListAdminActivity" />
+        <activity android:name=".Admin.AdminDetailListusrActivity" />
+        <activity android:name=".Admin.AdminListUserActivity" />
+        <activity android:name=".Admin.AdminDetailRegsmskActivity" />
+        <activity android:name=".Admin.AdminRegismskActivity" />
+        <activity android:name=".Admin.AdminHomeActivity" />
+        <activity android:name=".Admin.AdminDetailRwtActivity" />
+        <activity android:name=".Admin.AdminRiwayatActivity" />
+        <activity android:name=".Admin.AdminProfileActivity" />
         <activity android:name=".RiwayatDiresponActivity"></activity>
         <activity android:name=".EditRegistrasiaActivity" />
         <activity android:name=".DetailRiwayatrgsActivity" />

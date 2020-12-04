@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.praktikum.Admin.AdminHomeActivity;
 import com.example.praktikum.Database.RoomDB;
 import com.example.praktikum.MainActivity;
 import com.example.praktikum.Model.User;
@@ -145,8 +146,14 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("gender", user.getGender());
                 editor.putString("birthdate", user.getBirthdate());
                 editor.apply();
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(i);
+                if(userPref.getString("role", null).equals("1")){
+                    Intent i = new Intent(LoginActivity.this, AdminHomeActivity.class);
+                    startActivity(i);
+                }else if(userPref.getString("role", null).equals("2")){
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(i);
+                }
+
                 Toast.makeText(getApplicationContext(), "Welcome "+userPref.getString("name",null)+"!", Toast.LENGTH_SHORT).show();
             }
         }

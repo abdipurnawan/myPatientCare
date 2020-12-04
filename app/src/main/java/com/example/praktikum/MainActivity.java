@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.praktikum.Admin.AdminHomeActivity;
 import com.example.praktikum.AuthAndUser.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -36,10 +37,15 @@ public class MainActivity extends AppCompatActivity {
 
                 if(!isLoggedIn){
                     isFirstTime();
+                }else if(isLoggedIn){
+                    if (userPref.getString("role", null).equals("2")){
+                    }else if (userPref.getString("role", null).equals("1")){
+                        startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
+                    }
                 }
 
             }
-        }, 100);
+        }, 10);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -73,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void isFirstTime(){
         SharedPreferences preferences = getApplication().getSharedPreferences("onBoard", Context.MODE_PRIVATE);
+
         boolean isFirstTime = preferences.getBoolean("isFirstTime", true);
 
         if(isFirstTime){
@@ -80,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
             editor.putBoolean("isFirstTime", false);
             editor.apply();
 
-            startActivity(new Intent(MainActivity.this,MainActivity.class));
         }else{
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();

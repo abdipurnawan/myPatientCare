@@ -40,6 +40,9 @@ public interface UserDao {
     @Query("SELECT *from users where ID = :sID")
     User getUser(int sID);
 
+    @Query("SELECT name from users where ID = :sID")
+    String getUserName (int sID);
+
     //password change
     @Query("UPDATE users set password = :newPass where ID = :sID")
     void setNewPassword(int sID, String newPass);
