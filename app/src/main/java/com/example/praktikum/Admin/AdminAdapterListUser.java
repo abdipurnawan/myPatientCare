@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.praktikum.Model.User;
 import com.example.praktikum.R;
 
 import java.util.List;
@@ -18,14 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class AdminAdapterListUser extends RecyclerView.Adapter<AdminAdapterListUser.ViewHolder> {
 
-    List<String> namausr;
-    List<String>emailusr;
-
+    List<User>userList;
     Context context;
 
-    public AdminAdapterListUser(List<String> namausr, List<String> emailusr, Context context) {
-        this.namausr = namausr;
-        this.emailusr = emailusr;
+    public AdminAdapterListUser(List<User> userList, Context context) {
+        this.userList = userList;
         this.context = context;
     }
 
@@ -42,17 +40,15 @@ public class AdminAdapterListUser extends RecyclerView.Adapter<AdminAdapterListU
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.textView.setText(namausr.get(position));
-        holder.textView1.setText(emailusr.get(position));
+        holder.textView.setText(userList.get(position).getName());
+        holder.textView1.setText(userList.get(position).getEmail());
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(context, nopdftar.get(position), Toast.LENGTH_SHORT).show();
-
                 Intent intent =  new Intent(context, AdminDetailListusrActivity.class);
-                intent.putExtra("namausr", namausr.get(position));
-                intent.putExtra("emailusr", emailusr.get(position));
-
+                intent.putExtra("id", userList.get(position).getID());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
 
             }
@@ -63,7 +59,7 @@ public class AdminAdapterListUser extends RecyclerView.Adapter<AdminAdapterListU
     @Override
     public int getItemCount() {
 
-        return namausr.size();
+        return userList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

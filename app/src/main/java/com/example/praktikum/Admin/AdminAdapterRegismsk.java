@@ -25,7 +25,6 @@ public class AdminAdapterRegismsk extends RecyclerView.Adapter<AdminAdapterRegis
 
     List<PendaftaranWithUsers>pendaftaranList;
     Context context;
-    RoomDB database;
 
     public AdminAdapterRegismsk(List<PendaftaranWithUsers> pendaftaranList, Context context) {
         this.pendaftaranList = pendaftaranList;

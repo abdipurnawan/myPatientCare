@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-        }, 10);
+        }, 0);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
     public void regist(View view) {
         Intent intent = new Intent(this, RegistsakitActivity.class);
         startActivity(intent);
-        Toast.makeText(this, "MAU NIH GAN", Toast.LENGTH_LONG).show();
     }
 
 }

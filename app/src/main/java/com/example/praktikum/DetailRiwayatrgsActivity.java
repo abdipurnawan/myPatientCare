@@ -21,7 +21,7 @@ public class DetailRiwayatrgsActivity extends AppCompatActivity {
 
     TextView keluhan, penyakit, poli, tinggi, berat, status, tanggal, tanggalLayout;
     Button btnEdit, btnDelete;
-    int idRegis;
+    int idRegis, position;
     RoomDB database;
 
     @Override
@@ -59,6 +59,7 @@ public class DetailRiwayatrgsActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         database = RoomDB.getInstance(getApplicationContext());
                         database.pendaftaranDao().deletePendaftaran(idRegis);
+                        RiwayatPendingActivity.recyclerView.getAdapter().notifyItemRemoved(position);
                         RiwayatPendingActivity.recyclerView.getAdapter().notifyDataSetChanged();
                         Intent intent1 = new Intent(DetailRiwayatrgsActivity.this, RiwayatPendingActivity.class);
                         intent1.putExtra("id", idRegis);
@@ -89,7 +90,6 @@ public class DetailRiwayatrgsActivity extends AppCompatActivity {
                 intent.putExtra("id", idRegis);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -99,6 +99,7 @@ public class DetailRiwayatrgsActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra("id")) {
             idRegis = getIntent().getIntExtra("id", 0);
+            position = getIntent().getIntExtra("position", 0);
         }
     }
 

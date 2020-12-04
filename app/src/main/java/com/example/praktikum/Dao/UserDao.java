@@ -46,4 +46,9 @@ public interface UserDao {
     //password change
     @Query("UPDATE users set password = :newPass where ID = :sID")
     void setNewPassword(int sID, String newPass);
+
+
+    //FOR ADMIN
+    @Query("SELECT *from users where role = :sRole")
+    List<User> getAllUser(String sRole);
 }

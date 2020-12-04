@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="360dp"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
@@ -31,7 +31,7 @@
             android:layout_marginBottom="20dp"/>
 
         <TextView
-            android:id="@+id/namanih"
+            android:id="@+id/txtNamaDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nama Pasien"
@@ -43,18 +43,19 @@
             app:layout_constraintTop_toTopOf="@+id/sakitnih" />
 
         <TextView
-            android:id="@+id/namapasiennih"
+            android:id="@+id/txtNama"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Abdi"
+            android:text="I Made Gede Pasien"
             android:textSize="12sp"
             android:layout_marginStart="165dp"
             android:layout_marginTop="34dp"
             app:layout_constraintStart_toEndOf="@+id/sakitnih"
             app:layout_constraintTop_toTopOf="@+id/sakitnih" />
 
+
         <TextView
-            android:id="@+id/keluhannih"
+            android:id="@+id/txtKeluhanDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Keluhan"
@@ -66,10 +67,10 @@
             app:layout_constraintTop_toTopOf="@+id/sakitnih" />
 
         <TextView
-            android:id="@+id/keluhanpasiennih"
+            android:id="@+id/txtKeluhan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Banyak Mengeluh"
+            android:text="Sakit Kepala"
             android:textSize="12sp"
             android:layout_marginStart="165dp"
             android:layout_marginTop="74dp"
@@ -77,49 +78,149 @@
             app:layout_constraintTop_toTopOf="@+id/sakitnih" />
 
         <TextView
-            android:id="@+id/lamakeluhannih"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lama Keluhan"
-            android:textSize="14sp"
-            style="@style/textInputHintStyle"
-            android:layout_marginStart="165dp"
-            android:layout_marginTop="100dp"
-            app:layout_constraintStart_toEndOf="@+id/sakitnih"
-            app:layout_constraintTop_toTopOf="@+id/sakitnih" />
-
-        <TextView
-            android:id="@+id/lamakeluhanpasiennih"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selamanya"
-            android:textSize="12sp"
-            android:layout_marginStart="165dp"
-            android:layout_marginTop="120dp"
-            app:layout_constraintStart_toEndOf="@+id/sakitnih"
-            app:layout_constraintTop_toTopOf="@+id/sakitnih" />
-
-        <TextView
-            android:id="@+id/penyakitnih"
+            android:id="@+id/txtPenyakitDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Penyakit Bawaan"
             android:textSize="14sp"
-            style="@style/textInputHintStyle"
             android:layout_marginStart="165dp"
-            android:layout_marginTop="140dp"
+            android:layout_marginTop="94dp"
+            style="@style/textInputHintStyle"
             app:layout_constraintStart_toEndOf="@+id/sakitnih"
             app:layout_constraintTop_toTopOf="@+id/sakitnih" />
 
         <TextView
-            android:id="@+id/penyakitpasiennih"
+            android:id="@+id/txtPenyakit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kaki Kesemutan"
+            android:text="Vertigo"
             android:textSize="12sp"
             android:layout_marginStart="165dp"
-            android:layout_marginTop="160dp"
+            android:layout_marginTop="114dp"
             app:layout_constraintStart_toEndOf="@+id/sakitnih"
             app:layout_constraintTop_toTopOf="@+id/sakitnih" />
+
+        <TextView
+            android:id="@+id/txtPoliDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Poli"
+            android:textSize="14sp"
+            style="@style/textInputHintStyle"
+            android:layout_marginStart="165dp"
+            android:layout_marginTop="130dp"
+            app:layout_constraintStart_toEndOf="@+id/sakitnih"
+            app:layout_constraintTop_toTopOf="@+id/sakitnih" />
+
+        <TextView
+            android:id="@+id/txtPoli"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Umum"
+            android:textSize="12sp"
+            android:layout_marginStart="165dp"
+            android:layout_marginTop="150dp"
+            app:layout_constraintStart_toEndOf="@+id/sakitnih"
+            app:layout_constraintTop_toTopOf="@+id/sakitnih" />
+
+
+        <TextView
+            android:id="@+id/txtTinggiDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tinggi Badan"
+            android:textSize="14sp"
+            style="@style/textInputHintStyle"
+            android:layout_marginStart="165dp"
+            android:layout_marginTop="170dp"
+            app:layout_constraintStart_toEndOf="@+id/sakitnih"
+            app:layout_constraintTop_toTopOf="@+id/sakitnih" />
+
+        <TextView
+            android:id="@+id/txtTinggi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="170 cm"
+            android:textSize="12sp"
+            android:layout_marginStart="165dp"
+            android:layout_marginTop="190dp"
+            app:layout_constraintStart_toEndOf="@+id/sakitnih"
+            app:layout_constraintTop_toTopOf="@+id/sakitnih" />
+
+        <TextView
+            android:id="@+id/txtBeratDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Berat Badan"
+            android:textSize="14sp"
+            style="@style/textInputHintStyle"
+            android:layout_marginStart="165dp"
+            android:layout_marginTop="210dp"
+            app:layout_constraintStart_toEndOf="@+id/sakitnih"
+            app:layout_constraintTop_toTopOf="@+id/sakitnih" />
+
+        <TextView
+            android:id="@+id/txtBerat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50 kg"
+            android:textSize="12sp"
+            android:layout_marginStart="165dp"
+            android:layout_marginTop="230dp"
+            app:layout_constraintStart_toEndOf="@+id/sakitnih"
+            app:layout_constraintTop_toTopOf="@+id/sakitnih" />
+
+        <TextView
+            android:id="@+id/txtStatusDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textSize="14sp"
+            style="@style/textInputHintStyle"
+            android:layout_marginStart="165dp"
+            android:layout_marginTop="250dp"
+            app:layout_constraintStart_toEndOf="@+id/sakitnih"
+            app:layout_constraintTop_toTopOf="@+id/sakitnih" />
+
+        <TextView
+            android:id="@+id/txtStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Belum Disetujui"
+            android:textSize="12sp"
+            android:layout_marginStart="165dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="270dp"
+            app:layout_constraintStart_toEndOf="@+id/sakitnih"
+            app:layout_constraintTop_toTopOf="@+id/sakitnih" />
+
+        <TextView
+            android:id="@+id/txtTanggalDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tanggal Pemeriksaan"
+            android:textSize="14sp"
+            android:visibility="visible"
+            style="@style/textInputHintStyle"
+            android:layout_marginStart="165dp"
+            android:layout_marginTop="290dp"
+            app:layout_constraintStart_toEndOf="@+id/sakitnih"
+            app:layout_constraintTop_toTopOf="@+id/sakitnih" />
+
+        <TextView
+            android:id="@+id/txtTanggal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pemeriksaan Belum Disetujui"
+            android:visibility="visible"
+            android:textSize="12sp"
+            android:layout_marginStart="165dp"
+            android:layout_marginTop="310dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintStart_toEndOf="@+id/sakitnih"
+            app:layout_constraintTop_toTopOf="@+id/sakitnih" />
+
     </androidx.cardview.widget.CardView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

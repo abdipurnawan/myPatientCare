@@ -45,4 +45,7 @@ public interface PendaftaranDao {
 
     @Query("UPDATE pendaftarans set  status = :stat where ID = :sID")
     void refuseRegistrasi(String stat, int sID);
+
+    @Query("SELECT * FROM pendaftarans WHERE status = :status1 or status= :status2")
+    List<PendaftaranWithUsers> loadPendaftaranResponed(String status1, String status2);
 }

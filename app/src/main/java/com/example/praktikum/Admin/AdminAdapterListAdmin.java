@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.praktikum.Model.PendaftaranWithUsers;
+import com.example.praktikum.Model.User;
 import com.example.praktikum.R;
 
 import java.util.List;
@@ -18,14 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class AdminAdapterListAdmin extends RecyclerView.Adapter<AdminAdapterListAdmin.ViewHolder> {
 
-    List<String> namaadm;
-    List<String>emailadm;
-
+    List<User>userList;
     Context context;
 
-    public AdminAdapterListAdmin(List<String> namausr, List<String> emailusr, Context context) {
-        this.namaadm = namausr;
-        this.emailadm = emailusr;
+    public AdminAdapterListAdmin(List<User> userList, Context context) {
+        this.userList = userList;
         this.context = context;
     }
 
@@ -42,17 +41,15 @@ public class AdminAdapterListAdmin extends RecyclerView.Adapter<AdminAdapterList
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.textView.setText(namaadm.get(position));
-        holder.textView1.setText(emailadm.get(position));
+        holder.textView.setText(userList.get(position).getName());
+        holder.textView1.setText(userList.get(position).getEmail());
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(context, nopdftar.get(position), Toast.LENGTH_SHORT).show();
-
                 Intent intent =  new Intent(context, AdminDetailListadmActivity.class);
-                intent.putExtra("namaadm", namaadm.get(position));
-                intent.putExtra("emailadm", emailadm.get(position));
-
+                intent.putExtra("id", userList.get(position).getID());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
 
             }
@@ -63,7 +60,7 @@ public class AdminAdapterListAdmin extends RecyclerView.Adapter<AdminAdapterList
     @Override
     public int getItemCount() {
 
-        return namaadm.size();
+        return userList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -33,7 +33,5 @@ public class AdminRegismskActivity extends AppCompatActivity {
         List<PendaftaranWithUsers> pendaftaranWithUsers = database.pendaftaranDao().loadPendaftaranMasuk("pending");
         adminAdapterRegismsk = new AdminAdapterRegismsk(pendaftaranWithUsers, getApplicationContext());
         recyclerViewRegisMasuk.setAdapter(adminAdapterRegismsk);
-        adminAdapterRegismsk = new AdminAdapterRegismsk(pendaftaranWithUsers, getApplicationContext());
-        recyclerViewRegisMasuk.setAdapter(adminAdapterRegismsk);
     }
 }

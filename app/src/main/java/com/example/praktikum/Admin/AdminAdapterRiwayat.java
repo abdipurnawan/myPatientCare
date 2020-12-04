@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.praktikum.Model.PendaftaranWithUsers;
 import com.example.praktikum.R;
 
 import java.util.List;
@@ -16,15 +17,14 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class AdminAdapterRiwayat extends RecyclerView.Adapter<AdminAdapterRiwayat.ViewHolder> {
-    List<String> nopdftar;
-    List<String>pyktList;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
+public class AdminAdapterRiwayat extends RecyclerView.Adapter<AdminAdapterRiwayat.ViewHolder> {
+    List<PendaftaranWithUsers>pendaftaranList;
     Context context;
 
-    public AdminAdapterRiwayat(List<String> nopdftar, List<String> pyktList, Context context) {
-        this.nopdftar = nopdftar;
-        this.pyktList = pyktList;
+    public AdminAdapterRiwayat(List<PendaftaranWithUsers> pendaftaranList, Context context) {
+        this.pendaftaranList = pendaftaranList;
         this.context = context;
     }
 
@@ -40,19 +40,15 @@ public class AdminAdapterRiwayat extends RecyclerView.Adapter<AdminAdapterRiwaya
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        holder.textView.setText(nopdftar.get(position));
-        holder.textView1.setText(pyktList.get(position));
+        holder.textView.setText("No. Pendaftaran: "+(position+1));
+        holder.textView1.setText("Keluhan: "+pendaftaranList.get(position).pendaftaran.getKeluhan());
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(context, nopdftar.get(position), Toast.LENGTH_SHORT).show();
-
-                Intent intent =  new Intent(context, AdminDetailRwtActivity.class);
-                intent.putExtra("keluhan", pyktList.get(position));
-
-                context.startActivity(intent);
-
+                Intent intent1 = new Intent(context, AdminDetailRwtActivity.class);
+                intent1.putExtra("id", pendaftaranList.get(position).pendaftaran.getID());
+                intent1.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent1);
             }
         });
 
@@ -61,7 +57,7 @@ public class AdminAdapterRiwayat extends RecyclerView.Adapter<AdminAdapterRiwaya
     @Override
     public int getItemCount() {
 
-        return nopdftar.size();
+        return pendaftaranList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

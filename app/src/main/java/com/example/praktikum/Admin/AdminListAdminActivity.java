@@ -2,6 +2,9 @@ package com.example.praktikum.Admin;
 
 import android.os.Bundle;
 
+import com.example.praktikum.Database.RoomDB;
+import com.example.praktikum.Model.PendaftaranWithUsers;
+import com.example.praktikum.Model.User;
 import com.example.praktikum.R;
 
 import java.util.ArrayList;
@@ -14,39 +17,23 @@ public class AdminListAdminActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     AdminAdapterListAdmin adminAdapterListAdmin;
+    RoomDB database;
 
-    List<String> namaadm, emailadm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_list_admin);
 
-        namaadm = new ArrayList<>();
-        namaadm.add("Admin1");
-        namaadm.add("Admin2");
-        namaadm.add("Admin3");
-        namaadm.add("Admin4");
-        namaadm.add("Admin5");
-        namaadm.add("Admin6");
-        namaadm.add("Admin7");
-        namaadm.add("Admin8");
-        namaadm.add("Admin9");
-
-        emailadm = new ArrayList<>();
-        emailadm.add("admin1@gmail.com");
-        emailadm.add("admin2@gmail.com");
-        emailadm.add("admin3@gmail.com");
-        emailadm.add("admin4@gmail.com");
-        emailadm.add("admin5@gmail.com");
-        emailadm.add("admin6@gmail.com");
-        emailadm.add("admin7@gmail.com");
-        emailadm.add("admin8@gmail.com");
-        emailadm.add("admin9@gmail.com");
-
-
         recyclerView = findViewById(R.id.recycler5);
-        adminAdapterListAdmin = new AdminAdapterListAdmin(namaadm,emailadm,this);
+        getUser();
+
+    }
+
+    private void getUser(){
+        database = RoomDB.getInstance(getApplicationContext());
+        List<User> users = database.userDao().getAllUser("1");
+        adminAdapterListAdmin = new AdminAdapterListAdmin(users, getApplicationContext());
         recyclerView.setAdapter(adminAdapterListAdmin);
     }
 }
