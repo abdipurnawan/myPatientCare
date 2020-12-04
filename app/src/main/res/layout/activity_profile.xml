@@ -260,6 +260,7 @@
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/buttonLogout"
                         android:text="Logout"
+                        android:textColor="#FFFFFF"
                         style="@style/profileStyledBackButton" />
                 </RelativeLayout>
                 <RelativeLayout style="@style/profileDetailsLayout">

@@ -29,10 +29,7 @@
         <activity android:name=".Template.AuthActivity" />
         <activity android:name=".AuthAndUser.RegisterActivity" />
         <activity android:name=".AuthAndUser.LoginActivity" />
-        <activity
-            android:name=".ProfileActivity"
-            android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme.ProfileTheme" />
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".RiwayatActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
