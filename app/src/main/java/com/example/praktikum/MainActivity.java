@@ -11,10 +11,10 @@ import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.praktikum.Admin.AdminHomeActivity;
 import com.example.praktikum.AuthAndUser.LoginActivity;
+import com.example.praktikum.AuthAndUser.RegistsakitActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

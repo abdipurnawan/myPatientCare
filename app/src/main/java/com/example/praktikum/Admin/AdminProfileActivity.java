@@ -24,7 +24,6 @@ import com.example.praktikum.MainActivity;
 import com.example.praktikum.ProfileActivity;
 import com.example.praktikum.R;
 import com.example.praktikum.RiwayatActivity;
-import com.example.praktikum.Template.Constant;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 

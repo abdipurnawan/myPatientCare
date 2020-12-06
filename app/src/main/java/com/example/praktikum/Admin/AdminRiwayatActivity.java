@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.praktikum.Adapter.AdminAdapterRiwayat;
 import com.example.praktikum.Database.RoomDB;
 import com.example.praktikum.Model.PendaftaranWithUsers;
 import com.example.praktikum.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;

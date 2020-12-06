@@ -2,12 +2,11 @@ package com.example.praktikum.Admin;
 
 import android.os.Bundle;
 
+import com.example.praktikum.Adapter.AdminAdapterListAdmin;
 import com.example.praktikum.Database.RoomDB;
-import com.example.praktikum.Model.PendaftaranWithUsers;
 import com.example.praktikum.Model.User;
 import com.example.praktikum.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;

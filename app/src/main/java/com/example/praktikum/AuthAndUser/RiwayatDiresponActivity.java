@@ -1,4 +1,4 @@
-package com.example.praktikum;
+package com.example.praktikum.AuthAndUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +10,7 @@ import com.example.praktikum.Adapter.AdapterRegisPending;
 import com.example.praktikum.Adapter.AdapterRegisResponed;
 import com.example.praktikum.Database.RoomDB;
 import com.example.praktikum.Model.PendaftaranWithUsers;
+import com.example.praktikum.R;
 
 import java.util.List;
 

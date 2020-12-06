@@ -14,7 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.praktikum.Model.PendaftaranWithUsers;
-import com.example.praktikum.DetailRiwayatrgsActivity;
+import com.example.praktikum.AuthAndUser.DetailRiwayatrgsActivity;
 import com.example.praktikum.R;
 
 import java.util.List;

@@ -1,10 +1,9 @@
-package com.example.praktikum;
+package com.example.praktikum.AuthAndUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,39 +14,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.praktikum.AuthAndUser.LoginActivity;
-import com.example.praktikum.AuthAndUser.RegisterActivity;
 import com.example.praktikum.Database.RoomDB;
-import com.example.praktikum.Model.Pendaftaran;
-import com.example.praktikum.Model.User;
-import com.example.praktikum.Template.Constant;
+import com.example.praktikum.MainActivity;
+import com.example.praktikum.R;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+public class EditRegistrasiaActivity extends AppCompatActivity {
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class RegistsakitActivity extends AppCompatActivity {
-
-    private Button button, btnRegis, btnPoli;
+    private Button button, btnEdit;
     private AutoCompleteTextView poli;
     EditText keluhan, penyakit, tinggi, berat;
     TextInputLayout layoutKeluhan, layoutPenyakit, layoutPoli, layoutTinggi, layoutBerat;
     ProgressDialog dialog;
-    RoomDB database;
+    int idRegis;
     private static final String[] poliList = new String[] {"Umum", "Anak", "Gigi", "Urologi", "THT"};
+    RoomDB database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registsakit);
+        setContentView(R.layout.activity_edit_registrasi);
         init();
     }
 
@@ -70,29 +56,23 @@ public class RegistsakitActivity extends AppCompatActivity {
         tinggi = (EditText)findViewById(R.id.txtRegTinggi);
         berat = (EditText)findViewById(R.id.txtRegBerat);
 
+        getIncomingExtra();
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, poliList);
         poli.setAdapter(adapter);
 
-        dialog = new ProgressDialog(RegistsakitActivity.this);
+        dialog = new ProgressDialog(EditRegistrasiaActivity.this);
         dialog.setCancelable(false);
 
         button = (Button) findViewById(R.id.Regcancel);
-        btnRegis = (Button)findViewById(R.id.btnRegRegis);
-        btnPoli = (Button)findViewById(R.id.btnRegPoli);
+        btnEdit = (Button)findViewById(R.id.btnRegRegis);
 
-        btnPoli.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                poli.showDropDown();
-            }
-        });
-
-        btnRegis.setOnClickListener(new View.OnClickListener() {
+        btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(validate()){
-                    registrasi();
+                    edit();
                 }
             }
         });
@@ -228,28 +208,26 @@ public class RegistsakitActivity extends AppCompatActivity {
 
     }
 
-    private void registrasi(){
-        dialog.setMessage("Registering");
-        dialog.show();
-        SharedPreferences userPref = getApplicationContext().getSharedPreferences("user", getApplicationContext().MODE_PRIVATE);
-        int user_id = userPref.getInt("id", 0);
-        database = RoomDB.getInstance(getApplicationContext());
+    private void getIncomingExtra() {
 
-        Pendaftaran pendaftaran = new Pendaftaran();
-        pendaftaran.setTinggi_badan(tinggi.getText().toString());
-        pendaftaran.setTgl_regis(null);
-        pendaftaran.setStatus("pending");
-        pendaftaran.setPenyakit_bawaan(penyakit.getText().toString());
-        pendaftaran.setKeluhan(keluhan.getText().toString());
-        pendaftaran.setBerat_badan(berat.getText().toString());
-        pendaftaran.setId_user(user_id);
-        pendaftaran.setPoli(poli.getText().toString());
-        database.pendaftaranDao().insertPendaftaran(pendaftaran);
-        dialog.dismiss();
-        Intent intent1 = new Intent(RegistsakitActivity.this, MainActivity.class);
+        if (getIntent().hasExtra("id")) {
+            keluhan.setText(getIntent().getStringExtra("keluhan"));
+            penyakit.setText(getIntent().getStringExtra("penyakit_bawaan"));
+            poli.setText(getIntent().getStringExtra("poli"));
+            tinggi.setText(getIntent().getStringExtra("tinggi"));
+            berat.setText(getIntent().getStringExtra("berat"));
+            idRegis = getIntent().getIntExtra("id", 0);
+        }
+    }
+
+    private void edit(){
+        database = RoomDB.getInstance(getApplicationContext());
+        database.pendaftaranDao().updatePendaftaran(idRegis, keluhan.getText().toString(), penyakit.getText().toString(), poli.getText().toString(), tinggi.getText().toString(), berat.getText().toString());
+        RiwayatPendingActivity.recyclerView.getAdapter().notifyDataSetChanged();
+        Intent intent1 = new Intent(EditRegistrasiaActivity.this, DetailRiwayatrgsActivity.class);
+        intent1.putExtra("id", idRegis);
         startActivity(intent1);
         finish();
-        Toast.makeText(getApplicationContext(), "Register Success", Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(getApplicationContext(), "Edit Registrasi Success", Toast.LENGTH_SHORT).show();
     }
 }

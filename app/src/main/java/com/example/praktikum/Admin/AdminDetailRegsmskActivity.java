@@ -14,12 +14,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.praktikum.AuthAndUser.RegisterActivity;
 import com.example.praktikum.Database.RoomDB;
-import com.example.praktikum.DetailRiwayatrgsActivity;
 import com.example.praktikum.Model.PendaftaranWithUsers;
 import com.example.praktikum.R;
-import com.example.praktikum.RiwayatPendingActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

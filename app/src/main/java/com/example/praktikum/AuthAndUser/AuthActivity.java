@@ -1,11 +1,10 @@
-package com.example.praktikum.Template;
+package com.example.praktikum.AuthAndUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.praktikum.AuthAndUser.LoginActivity;
 import com.example.praktikum.R;
 
 public class AuthActivity extends AppCompatActivity {

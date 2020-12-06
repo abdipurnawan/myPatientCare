@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.praktikum.DetailRiwayatrgsActivity;
+import com.example.praktikum.AuthAndUser.DetailRiwayatrgsActivity;
 import com.example.praktikum.Model.PendaftaranWithUsers;
 import com.example.praktikum.R;
 

@@ -1,4 +1,4 @@
-package com.example.praktikum.Admin;
+package com.example.praktikum.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.praktikum.Database.RoomDB;
-import com.example.praktikum.DetailRiwayatrgsActivity;
+import com.example.praktikum.Admin.AdminDetailRegsmskActivity;
 import com.example.praktikum.Model.PendaftaranWithUsers;
 import com.example.praktikum.R;
 

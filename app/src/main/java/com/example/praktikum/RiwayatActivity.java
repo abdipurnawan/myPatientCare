@@ -9,9 +9,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.praktikum.AuthAndUser.LoginActivity;
+import com.example.praktikum.AuthAndUser.RiwayatDiresponActivity;
+import com.example.praktikum.AuthAndUser.RiwayatPendingActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class RiwayatActivity extends AppCompatActivity {

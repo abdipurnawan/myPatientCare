@@ -1,21 +1,19 @@
-package com.example.praktikum;
+package com.example.praktikum.AuthAndUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.praktikum.Database.RoomDB;
 import com.example.praktikum.Model.PendaftaranWithUsers;
+import com.example.praktikum.R;
 
 public class DetailRiwayatrgsActivity extends AppCompatActivity {
 

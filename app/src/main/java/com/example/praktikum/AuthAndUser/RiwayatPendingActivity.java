@@ -1,4 +1,4 @@
-package com.example.praktikum;
+package com.example.praktikum.AuthAndUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +17,6 @@ import com.example.praktikum.Database.RoomDB;
 import com.example.praktikum.Model.Pendaftaran;
 import com.example.praktikum.Model.PendaftaranWithUsers;
 import com.example.praktikum.R;
-import com.example.praktikum.Template.Constant;
 
 import org.json.JSONArray;
 import org.json.JSONException;

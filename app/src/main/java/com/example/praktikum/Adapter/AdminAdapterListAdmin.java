@@ -1,4 +1,4 @@
-package com.example.praktikum.Admin;
+package com.example.praktikum.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.praktikum.Admin.AdminDetailListadmActivity;
 import com.example.praktikum.Model.User;
 import com.example.praktikum.R;
 
@@ -17,12 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class AdminAdapterListUser extends RecyclerView.Adapter<AdminAdapterListUser.ViewHolder> {
+public class AdminAdapterListAdmin extends RecyclerView.Adapter<AdminAdapterListAdmin.ViewHolder> {
 
     List<User>userList;
     Context context;
 
-    public AdminAdapterListUser(List<User> userList, Context context) {
+    public AdminAdapterListAdmin(List<User> userList, Context context) {
         this.userList = userList;
         this.context = context;
     }
@@ -32,7 +33,7 @@ public class AdminAdapterListUser extends RecyclerView.Adapter<AdminAdapterListU
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_admin_listuser, parent, false);
+        View view = layoutInflater.inflate(R.layout.item_admin_listadmin, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -46,7 +47,7 @@ public class AdminAdapterListUser extends RecyclerView.Adapter<AdminAdapterListU
             @Override
             public void onClick(View v) {
 //                Toast.makeText(context, nopdftar.get(position), Toast.LENGTH_SHORT).show();
-                Intent intent =  new Intent(context, AdminDetailListusrActivity.class);
+                Intent intent =  new Intent(context, AdminDetailListadmActivity.class);
                 intent.putExtra("id", userList.get(position).getID());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
@@ -71,11 +72,10 @@ public class AdminAdapterListUser extends RecyclerView.Adapter<AdminAdapterListU
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imageView = itemView.findViewById(R.id.profilrecy);
-            textView = itemView.findViewById(R.id.Namauser);
-            textView1 = itemView.findViewById(R.id.emailuser);
-            constraintLayout = itemView.findViewById(R.id.conslayuser);
+            imageView = itemView.findViewById(R.id.profilrecy1);
+            textView = itemView.findViewById(R.id.Namaadmin);
+            textView1 = itemView.findViewById(R.id.emailadmin);
+            constraintLayout = itemView.findViewById(R.id.conslayadmin);
         }
     }
-
 }
