@@ -139,7 +139,7 @@ public class AdminDetailRegsmskActivity extends AppCompatActivity {
         PendaftaranWithUsers pendaftaranWithUsers = database.pendaftaranDao().loadPendaftaranById(idRegis);
         keluhan.setText(pendaftaranWithUsers.pendaftaran.getKeluhan());
         penyakit.setText(pendaftaranWithUsers.pendaftaran.getPenyakit_bawaan());
-        poli.setText(pendaftaranWithUsers.pendaftaran.getPoli());
+        poli.setText(database.poliDao().getPoli(pendaftaranWithUsers.pendaftaran.getId_poli()));
         tinggi.setText(pendaftaranWithUsers.pendaftaran.getTinggi_badan());
         berat.setText(pendaftaranWithUsers.pendaftaran.getBerat_badan());
         int idUser = pendaftaranWithUsers.pendaftaran.getId_user();

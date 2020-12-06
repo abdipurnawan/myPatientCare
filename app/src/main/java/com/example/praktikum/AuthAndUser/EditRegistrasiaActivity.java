@@ -12,12 +12,17 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.praktikum.Database.RoomDB;
 import com.example.praktikum.MainActivity;
+import com.example.praktikum.Model.Poli;
 import com.example.praktikum.R;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditRegistrasiaActivity extends AppCompatActivity {
 
@@ -27,7 +32,10 @@ public class EditRegistrasiaActivity extends AppCompatActivity {
     TextInputLayout layoutKeluhan, layoutPenyakit, layoutPoli, layoutTinggi, layoutBerat;
     ProgressDialog dialog;
     int idRegis;
-    private static final String[] poliList = new String[] {"Umum", "Anak", "Gigi", "Urologi", "THT"};
+    List<String> poliDisplay;
+    List<Integer>poliValue;
+    ArrayAdapter<String> adapterPoli;
+    Spinner poliSpinner;
     RoomDB database;
 
     @Override
@@ -46,21 +54,17 @@ public class EditRegistrasiaActivity extends AppCompatActivity {
     public void init(){
         layoutKeluhan = (TextInputLayout)findViewById(R.id.txtRegKeluhanLayout);
         layoutPenyakit = (TextInputLayout)findViewById(R.id.txtRegPenyakitLayout);
-        layoutPoli = (TextInputLayout)findViewById(R.id.txtRegPoliLayout);
         layoutTinggi = (TextInputLayout)findViewById(R.id.txtRegTinggiLayout);
         layoutBerat = (TextInputLayout)findViewById(R.id.txtRegBeratLayout);
 
         keluhan = (EditText)findViewById(R.id.txtRegKeluhan);
         penyakit = (EditText)findViewById(R.id.txtRegPenyakit);
-        poli = (AutoCompleteTextView)findViewById(R.id.txtRegPoli);
         tinggi = (EditText)findViewById(R.id.txtRegTinggi);
+        poliSpinner = (Spinner)findViewById(R.id.spnPoli);
         berat = (EditText)findViewById(R.id.txtRegBerat);
 
+        setSpinners();
         getIncomingExtra();
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, poliList);
-        poli.setAdapter(adapter);
 
         dialog = new ProgressDialog(EditRegistrasiaActivity.this);
         dialog.setCancelable(false);
@@ -106,25 +110,6 @@ public class EditRegistrasiaActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!penyakit.getText().toString().isEmpty()){
                     layoutPenyakit.setErrorEnabled(false);
-                }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        poli.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!poli.getText().toString().isEmpty()){
-                    layoutPoli.setErrorEnabled(false);
                 }
             }
 
@@ -189,11 +174,6 @@ public class EditRegistrasiaActivity extends AppCompatActivity {
             layoutPenyakit.setError("Penyakit Bawaan is Required");
             return false;
         }
-        if(poli.getText().toString().isEmpty()){
-            layoutPoli.setErrorEnabled(true);
-            layoutPoli.setError("Poli is Required");
-            return false;
-        }
         if(tinggi.getText().toString().isEmpty()){
             layoutTinggi.setErrorEnabled(true);
             layoutTinggi.setError("Tinggi is Required");
@@ -213,7 +193,7 @@ public class EditRegistrasiaActivity extends AppCompatActivity {
         if (getIntent().hasExtra("id")) {
             keluhan.setText(getIntent().getStringExtra("keluhan"));
             penyakit.setText(getIntent().getStringExtra("penyakit_bawaan"));
-            poli.setText(getIntent().getStringExtra("poli"));
+            poliSpinner.setSelection(poliValue.indexOf(getIntent().getIntExtra("id_poli", 0)));
             tinggi.setText(getIntent().getStringExtra("tinggi"));
             berat.setText(getIntent().getStringExtra("berat"));
             idRegis = getIntent().getIntExtra("id", 0);
@@ -222,12 +202,29 @@ public class EditRegistrasiaActivity extends AppCompatActivity {
 
     private void edit(){
         database = RoomDB.getInstance(getApplicationContext());
-        database.pendaftaranDao().updatePendaftaran(idRegis, keluhan.getText().toString(), penyakit.getText().toString(), poli.getText().toString(), tinggi.getText().toString(), berat.getText().toString());
+        database.pendaftaranDao().updatePendaftaran(idRegis, keluhan.getText().toString(), penyakit.getText().toString(), poliValue.get(poliSpinner.getSelectedItemPosition()), tinggi.getText().toString(), berat.getText().toString());
         RiwayatPendingActivity.recyclerView.getAdapter().notifyDataSetChanged();
         Intent intent1 = new Intent(EditRegistrasiaActivity.this, DetailRiwayatrgsActivity.class);
         intent1.putExtra("id", idRegis);
         startActivity(intent1);
         finish();
         Toast.makeText(getApplicationContext(), "Edit Registrasi Success", Toast.LENGTH_SHORT).show();
+    }
+
+    private void setSpinners() {
+        poliDisplay = new ArrayList<String>();
+        poliValue = new ArrayList<Integer>();
+        poliSpinner = (Spinner) findViewById(R.id.spnPoli);
+
+        database = RoomDB.getInstance(getApplicationContext());
+        List<Poli> poliList = database.poliDao().getAllPoli();
+        for (Poli poli : poliList) {
+            poliDisplay.add(poli.getPoli());
+            poliValue.add(poli.getID());
+        }
+        adapterPoli = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, poliDisplay);
+        adapterPoli.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        poliSpinner.setAdapter(adapterPoli);
+        adapterPoli.notifyDataSetChanged();
     }
 }

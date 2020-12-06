@@ -9,17 +9,23 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.praktikum.Database.RoomDB;
 import com.example.praktikum.MainActivity;
 import com.example.praktikum.Model.Pendaftaran;
+import com.example.praktikum.Model.Poli;
 import com.example.praktikum.R;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegistsakitActivity extends AppCompatActivity {
 
@@ -29,6 +35,10 @@ public class RegistsakitActivity extends AppCompatActivity {
     TextInputLayout layoutKeluhan, layoutPenyakit, layoutPoli, layoutTinggi, layoutBerat;
     ProgressDialog dialog;
     RoomDB database;
+    List<String>poliDisplay;
+    List<Integer>poliValue;
+    ArrayAdapter<String> adapterPoli;
+    Spinner poliSpinner;
     private static final String[] poliList = new String[] {"Umum", "Anak", "Gigi", "Urologi", "THT"};
 
     @Override
@@ -45,35 +55,23 @@ public class RegistsakitActivity extends AppCompatActivity {
     }
 
     public void init(){
+        setSpinners();
         layoutKeluhan = (TextInputLayout)findViewById(R.id.txtRegKeluhanLayout);
         layoutPenyakit = (TextInputLayout)findViewById(R.id.txtRegPenyakitLayout);
-        layoutPoli = (TextInputLayout)findViewById(R.id.txtRegPoliLayout);
         layoutTinggi = (TextInputLayout)findViewById(R.id.txtRegTinggiLayout);
         layoutBerat = (TextInputLayout)findViewById(R.id.txtRegBeratLayout);
 
         keluhan = (EditText)findViewById(R.id.txtRegKeluhan);
         penyakit = (EditText)findViewById(R.id.txtRegPenyakit);
-        poli = (AutoCompleteTextView)findViewById(R.id.txtRegPoli);
         tinggi = (EditText)findViewById(R.id.txtRegTinggi);
         berat = (EditText)findViewById(R.id.txtRegBerat);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, poliList);
-        poli.setAdapter(adapter);
+        poliSpinner = (Spinner) findViewById(R.id.spnPoli);
 
         dialog = new ProgressDialog(RegistsakitActivity.this);
         dialog.setCancelable(false);
 
         button = (Button) findViewById(R.id.Regcancel);
         btnRegis = (Button)findViewById(R.id.btnRegRegis);
-        btnPoli = (Button)findViewById(R.id.btnRegPoli);
-
-        btnPoli.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                poli.showDropDown();
-            }
-        });
 
         btnRegis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,25 +111,6 @@ public class RegistsakitActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!penyakit.getText().toString().isEmpty()){
                     layoutPenyakit.setErrorEnabled(false);
-                }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        poli.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!poli.getText().toString().isEmpty()){
-                    layoutPoli.setErrorEnabled(false);
                 }
             }
 
@@ -196,11 +175,6 @@ public class RegistsakitActivity extends AppCompatActivity {
             layoutPenyakit.setError("Penyakit Bawaan is Required");
             return false;
         }
-        if(poli.getText().toString().isEmpty()){
-            layoutPoli.setErrorEnabled(true);
-            layoutPoli.setError("Poli is Required");
-            return false;
-        }
         if(tinggi.getText().toString().isEmpty()){
             layoutTinggi.setErrorEnabled(true);
             layoutTinggi.setError("Tinggi is Required");
@@ -230,13 +204,30 @@ public class RegistsakitActivity extends AppCompatActivity {
         pendaftaran.setKeluhan(keluhan.getText().toString());
         pendaftaran.setBerat_badan(berat.getText().toString());
         pendaftaran.setId_user(user_id);
-        pendaftaran.setPoli(poli.getText().toString());
+        pendaftaran.setId_poli(poliValue.get(poliSpinner.getSelectedItemPosition()));
         database.pendaftaranDao().insertPendaftaran(pendaftaran);
         dialog.dismiss();
         Intent intent1 = new Intent(RegistsakitActivity.this, MainActivity.class);
         startActivity(intent1);
         finish();
         Toast.makeText(getApplicationContext(), "Register Success", Toast.LENGTH_SHORT).show();
-
     }
+
+    private void setSpinners() {
+        poliDisplay = new ArrayList<String>();
+        poliValue = new ArrayList<Integer>();
+        poliSpinner = (Spinner) findViewById(R.id.spnPoli);
+
+        database = RoomDB.getInstance(getApplicationContext());
+        List<Poli> poliList = database.poliDao().getAllPoli();
+        for (Poli poli : poliList) {
+            poliDisplay.add(poli.getPoli());
+            poliValue.add(poli.getID());
+        }
+        adapterPoli = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, poliDisplay);
+        adapterPoli.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        poliSpinner.setAdapter(adapterPoli);
+        adapterPoli.notifyDataSetChanged();
+    }
+
 }

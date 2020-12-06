@@ -43,33 +43,7 @@
                     android:maxLines="1"
                     android:hint="Penyakit Bawaan"
                     android:id="@+id/txtRegPenyakit"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/parent"
-                android:layout_marginTop="@dimen/signup_text_margin_top"
-                android:id="@+id/txtRegPoliLayout">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <AutoCompleteTextView
-                        style="@style/modifiedEditText"
-                        android:id="@+id/txtRegPoli"
-                        android:hint="Poli                    "
-                        android:inputType="text"/>
-
-                    <Button
-                        android:id="@+id/btnRegPoli"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Choose Poli"
-                        android:maxLines="1"
-                        android:inputType="text"/>
-
-                </LinearLayout>
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtRegTinggiLayout"
@@ -94,6 +68,51 @@
                     android:hint="Berat Badan"
                     android:id="@+id/txtRegBerat"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/parent"
+                android:layout_marginTop="@dimen/loginViewsMargin">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="3dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints">
+
+                    <TextView
+                        style="@style/modifiedEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="Poli: " />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.088"
+                    app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteY="0dp">
+
+                    <Spinner
+                        android:id="@+id/spnPoli"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="20sp"
+                        android:layout_marginRight="20sp"
+                        tools:ignore="MissingConstraints" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"

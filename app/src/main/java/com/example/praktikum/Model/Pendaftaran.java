@@ -12,8 +12,8 @@ public class Pendaftaran {
     @ColumnInfo(name = "id_user")
     private int id_user;
 
-    @ColumnInfo(name = "poli")
-    private String poli;
+    @ColumnInfo(name = "id_poli")
+    private int id_poli;
 
     @ColumnInfo(name = "keluhan")
     private String keluhan;
@@ -54,12 +54,12 @@ public class Pendaftaran {
     }
 
     //id_poli
-    public String getPoli(){
-        return poli;
+    public int getId_poli() {
+        return id_poli;
     }
 
-    public void setPoli(String poli){
-        this.poli= poli;
+    public void setId_poli(int id_poli) {
+        this.id_poli = id_poli;
     }
 
     //keluhan

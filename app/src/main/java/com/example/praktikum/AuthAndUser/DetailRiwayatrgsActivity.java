@@ -79,15 +79,17 @@ public class DetailRiwayatrgsActivity extends AppCompatActivity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                database = RoomDB.getInstance(getApplicationContext());
                 Intent intent = new Intent(DetailRiwayatrgsActivity.this, EditRegistrasiaActivity.class);
                 intent.putExtra("keluhan", keluhan.getText().toString());
                 intent.putExtra("penyakit_bawaan", penyakit.getText().toString());
-                intent.putExtra("poli", poli.getText().toString());
+                intent.putExtra("id_poli", database.pendaftaranDao().getIDPoli(idRegis));
                 intent.putExtra("tinggi", tinggi.getText().toString());
                 intent.putExtra("berat", berat.getText().toString());
                 intent.putExtra("id", idRegis);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -106,7 +108,7 @@ public class DetailRiwayatrgsActivity extends AppCompatActivity {
         PendaftaranWithUsers pendaftaranWithUsers = database.pendaftaranDao().loadPendaftaranById(idRegis);
             keluhan.setText(pendaftaranWithUsers.pendaftaran.getKeluhan());
             penyakit.setText(pendaftaranWithUsers.pendaftaran.getPenyakit_bawaan());
-            poli.setText(pendaftaranWithUsers.pendaftaran.getPoli());
+            poli.setText(database.poliDao().getPoli(pendaftaranWithUsers.pendaftaran.getId_poli()));
             tinggi.setText(pendaftaranWithUsers.pendaftaran.getTinggi_badan());
             berat.setText(pendaftaranWithUsers.pendaftaran.getBerat_badan());
             if (pendaftaranWithUsers.pendaftaran.getStatus().equals("pending")){

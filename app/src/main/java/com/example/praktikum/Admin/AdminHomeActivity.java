@@ -1,13 +1,19 @@
 package com.example.praktikum.Admin;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.praktikum.Database.RoomDB;
+import com.example.praktikum.Model.Poli;
 import com.example.praktikum.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -74,5 +80,12 @@ public class AdminHomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AdminListAdminActivity.class);
         startActivity(intent);
         Toast.makeText(this, "List Admin", Toast.LENGTH_LONG).show();
+    }
+
+
+    public void listPoli(View view) {
+        Intent intent = new Intent(this, AdminListPoli.class);
+        startActivity(intent);
+        Toast.makeText(this, "List Poli", Toast.LENGTH_LONG).show();
     }
 }
