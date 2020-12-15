@@ -15,10 +15,14 @@ import android.widget.TextView;
 import com.example.praktikum.Admin.AdminHomeActivity;
 import com.example.praktikum.AuthAndUser.LoginActivity;
 import com.example.praktikum.AuthAndUser.RegistsakitActivity;
+import com.example.praktikum.Database.RoomDB;
+import com.example.praktikum.Model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    RoomDB database;
+    int adminCheck;
     TextView welcomeMain;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,23 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
+
+        //CHECK ADMIN IF EXIST
+        database = RoomDB.getInstance(getApplicationContext());
+        adminCheck = database.userDao().checkAdmin("admin@pacar.com");
+        if (adminCheck<1){
+            User user = new User();
+            user.setName("Admin Patient Care");
+            user.setEmail("admin@pacar.com");
+            user.setPassword("12345678");
+            user.setAddress("Tembuku, Bangli, Bali");
+            user.setBirthdate("2000-09-13");
+            user.setGender("Male");
+            user.setMobile("0366123456");
+            user.setRole("1");
+            database.userDao().insert(user);
+        }
+
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

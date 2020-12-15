@@ -49,6 +49,7 @@ public class AdminAdapterRegismsk extends RecyclerView.Adapter<AdminAdapterRegis
             public void onClick(View v) {
                 Intent intent1 = new Intent(context, AdminDetailRegsmskActivity.class);
                 intent1.putExtra("id", pendaftaranList.get(position).pendaftaran.getID());
+                intent1.putExtra("position", position);
                 intent1.setFlags(FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent1);
             }

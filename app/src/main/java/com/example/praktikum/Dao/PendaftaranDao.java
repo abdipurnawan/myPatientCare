@@ -9,24 +9,28 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 @Dao
 public interface PendaftaranDao {
+    @Transaction
     @Query("SELECT * FROM pendaftarans ORDER BY ID")
     List<PendaftaranWithUsers> loadAllPendaftaranss();
 
     @Insert
     void insertPendaftaran(Pendaftaran pendaftaran);
 
+    @Transaction
     @Query("SELECT * FROM pendaftarans WHERE ID = :sID")
     PendaftaranWithUsers loadPendaftaranById(int sID);
 
-    @Query("SELECT * FROM pendaftarans WHERE status = :status and id_user = :idUser")
+    @Transaction
+    @Query("SELECT * FROM pendaftarans WHERE status = :status and id_user = :idUser order by ID desc")
     List<PendaftaranWithUsers> loadPendaftaranByStatusPending(String
                                                         status, int idUser);
-
-    @Query("SELECT * FROM pendaftarans WHERE (status = :status1 and id_user = :idUser) or (status = :status2 and id_user = :idUser)")
+    @Transaction
+    @Query("SELECT * FROM pendaftarans WHERE (status = :status1 and id_user = :idUser) or (status = :status2 and id_user = :idUser) order by ID desc")
     List<PendaftaranWithUsers> loadPendaftaranByStatusResponed(String
                                                                       status1, String status2, int idUser);
 
@@ -41,7 +45,8 @@ public interface PendaftaranDao {
 
 
     //ADMIN
-    @Query("SELECT * FROM pendaftarans WHERE status = :status")
+    @Transaction
+    @Query("SELECT * FROM pendaftarans WHERE status = :status order by ID desc")
     List<PendaftaranWithUsers> loadPendaftaranMasuk(String status);
 
     @Query("UPDATE pendaftarans set tgl_regis = :tglRegis, status = :stat where ID = :sID")
@@ -50,6 +55,7 @@ public interface PendaftaranDao {
     @Query("UPDATE pendaftarans set  status = :stat where ID = :sID")
     void refuseRegistrasi(String stat, int sID);
 
-    @Query("SELECT * FROM pendaftarans WHERE status = :status1 or status= :status2")
+    @Transaction
+    @Query("SELECT * FROM pendaftarans WHERE status = :status1 or status= :status2 order by ID desc")
     List<PendaftaranWithUsers> loadPendaftaranResponed(String status1, String status2);
 }

@@ -33,4 +33,10 @@ public class AdminRegismskActivity extends AppCompatActivity {
         adminAdapterRegismsk = new AdminAdapterRegismsk(pendaftaranWithUsers, getApplicationContext());
         recyclerViewRegisMasuk.setAdapter(adminAdapterRegismsk);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPendaftaran();
+    }
 }

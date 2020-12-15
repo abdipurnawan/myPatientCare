@@ -51,4 +51,8 @@ public interface UserDao {
     //FOR ADMIN
     @Query("SELECT *from users where role = :sRole")
     List<User> getAllUser(String sRole);
+
+    //CHECK ADMIN IF EXIST
+    @Query("SELECT ID from users where email= :sEmail")
+    int checkAdmin(String sEmail);
 }

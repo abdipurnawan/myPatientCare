@@ -87,6 +87,7 @@ public class AdminDetailRegsmskActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         database.pendaftaranDao().acceptRegistrasi(tanggalpemeriksaan.getText().toString(), "accepted", idRegis);
+                        AdminRegismskActivity.recyclerViewRegisMasuk.getAdapter().notifyItemRemoved(getIntent().getIntExtra("position", 0));
                         AdminRegismskActivity.recyclerViewRegisMasuk.getAdapter().notifyDataSetChanged();
                         Toast.makeText(AdminDetailRegsmskActivity.this,"Accepted", Toast.LENGTH_LONG).show();
                         Intent intent = getIntent();
@@ -109,6 +110,7 @@ public class AdminDetailRegsmskActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         database = RoomDB.getInstance(getApplicationContext());
                         database.pendaftaranDao().refuseRegistrasi("rejected", idRegis);
+                        AdminRegismskActivity.recyclerViewRegisMasuk.getAdapter().notifyItemRemoved(getIntent().getIntExtra("position", 0));
                         AdminRegismskActivity.recyclerViewRegisMasuk.getAdapter().notifyDataSetChanged();
                         Intent intent = getIntent();
                         finish();
