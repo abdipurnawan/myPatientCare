@@ -119,6 +119,7 @@ public class AdminProfileActivity extends AppCompatActivity {
                         editor.apply();
                         Toast.makeText(getApplicationContext(), "Logout Success", Toast.LENGTH_SHORT).show();
                         Intent intent1 = new Intent(AdminProfileActivity.this, LoginActivity.class);
+                        intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent1);
                     }
                 });

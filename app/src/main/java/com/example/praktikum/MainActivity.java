@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
                     isFirstTime();
                 }else if(isLoggedIn){
                     if (userPref.getString("role", null).equals("2")){
+                        startActivity(new Intent(MainActivity.this, MainActivity.class));
+                        finish();
                     }else if (userPref.getString("role", null).equals("1")){
                         startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
                     }
@@ -107,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("isFirstTime", false);
             editor.apply();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
 
         }else{
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
