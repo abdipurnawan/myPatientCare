@@ -149,9 +149,11 @@ public class LoginActivity extends AppCompatActivity {
                 if(userPref.getString("role", null).equals("1")){
                     Intent i = new Intent(LoginActivity.this, AdminHomeActivity.class);
                     startActivity(i);
+                    finish();
                 }else if(userPref.getString("role", null).equals("2")){
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(i);
+                    finish();
                 }
 
                 Toast.makeText(getApplicationContext(), "Welcome "+userPref.getString("name",null)+"!", Toast.LENGTH_SHORT).show();
